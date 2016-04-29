@@ -1,34 +1,36 @@
-## Analysis for Samsung Galaxy S smartphone data
+## Analysis for averaging the Samsung Galaxy S smartphone data
 
-This repo contains the following:
-
-- Raw data obtained from [1], and packaged in six text files:
+The existing repo is dependent upon the user accessing the raw data in [1], which is specifically packaged in seven text files:
   * "subject_test.txt" 
   * "y_test.txt"
   * "X_test.txt"
   * "subject_train.txt"
   * "y_train.txt"
   * "X_train.txt"
+  * "features.txt"
+
+Besides this README, this repo contains the following:
                 
-- An R script for obtaining, cleaning and further processing the data: 
+- An R script for obtaining, cleaning and further processing the aforementioned raw data: 
   * "run_analysis.R"
                 
 - The processed tidy data set:
   * "averages.txt"
                 
-- The code book for "averages.txt"
+- The code book for "averages.txt", contained in CodeBook.md
 
 ## Explanation of run_analysis.R
 
 The purpose of "run_analysis.R" is to get, merge, clean and then further process the test and training data sets compiled in the study in [1].  The final result is to write a new data frame "averages.txt" which presents averages of 66 variables from [1] grouped by subject and activity. Specifically, the analysis does the following:
 
-- Obtains and merges six data sets into a "merged" data frame:
+- Obtains and merges seven data sets into a "merged" data frame:
   * "subject_test.txt" which contains the subject IDs for the test set.
   * "y_test.txt" which is the activities for those subject IDs from the test set.
   * "X_test.txt" which is then the observations for the IDs and activities for the test set.
   * "subject_train.txt" which contains the subject IDs for the train set.
   * "y_train.txt" which is the activities for those subject IDs from the train set.
   * "X_train.txt" which is then the observations for the IDs and activities for the train set.
+  * "features.txt" which is the names of the variables.
         
 - Selects from "merged" those variables representing means and standard deviations, with the result an intermediate data frame "meanstd".
 
