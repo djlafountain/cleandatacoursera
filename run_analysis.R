@@ -1,4 +1,4 @@
-library(plyr)
+library(dplyr)
 
 
 ## The following reads the training and test data sets, along with subject IDs
@@ -67,29 +67,9 @@ y <- as.factor(meanstd$id)
 meanstd$id <- y
 
 ## The following creates a new independent data frame, "averages" with the
-## average of each variable for each activity and each subject; this uses a loop
-## function described separately below.
+## average of each variable for each activity and each subject.
 
-firstcol <- meanstdnames[1]
-averages <- ddply(meanstd, .(id, activity), summarize, mean = mean(get(firstcol)))
-#grouped <- group_by(meanstd, id, activity)
-#averages <- summarize(grouped, mean(X))
-averages <- averages[,1:2]
-
-## The following loops through each variable column in "meanstd" and 
-## computes averages grouped by ID and activity, and then appends those averages as
-## a column in the new data frame "averages".
-
-for(i in seq_along(meanstdnames)){
-        x <- i
-        letter <- meanstdnames[i]
-        letterDF <- ddply(meanstd, .(id, activity), summarize, mean = mean(get(letter)))
-        #grouped <- group_by(meanstd, id, activity)
-        #letterDF <- summarize(grouped, mean=mean(get(letter)))
-        averages <- cbind(averages,letterDF$mean)
-        ithnames <- c("id","activity",meanstdnames[1:i])
-        colnames(averages) <- ithnames
-}
+averages <- meanstd %>% group_by(id, activity) %>% summarize_each(funs(mean))
 
 ## The following writes "averages" to a text file.
 
